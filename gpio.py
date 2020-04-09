@@ -1,6 +1,10 @@
+import configparser
+import logging
 import time
 from RPi import GPIO
-import configparser
+
+logging.basicConfig(level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S',
+                    format='%(asctime)-15s - [%(levelname)s] buzzer: %(message)s', )
 
 PIN = 4
 GPIO.setmode(GPIO.BCM)
@@ -9,6 +13,8 @@ config = configparser.ConfigParser()
 config.sections()
 
 old_power=0
+
+logging.info("Initializing...")
 
 try:
     while True:
@@ -20,11 +26,11 @@ try:
             if power == '1':
                 GPIO.setup(PIN, GPIO.OUT)
                 last_buzz = True
-                print(localtime + " Buzzer turned ON")
+                logging.info("Buzzer turned ON")
             else:
                 GPIO.setup(PIN, GPIO.IN)
                 last_buzz = False
-                print(localtime + " Buzzer turned OFF")
+                logging.info("Buzzer turned OFF")
 
             old_power = power
 
@@ -38,4 +44,5 @@ try:
 
         time.sleep(0.3)
 except:
+    logging.info("Exception...")
     GPIO.cleanup()
