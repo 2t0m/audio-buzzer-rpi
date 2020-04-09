@@ -1,7 +1,10 @@
 version: '3.3'
 services:
-  audio-buzzer-rpi:
+  audio-buzzer-rpi-ha:
     build: .
+    image: audio-buzzer-rpi-ha
+    container_name: audio-buzzer-rpi-ha
+    restart: unless-stopped
     volumes:
       - /opt/homeassistant/apps:/config:ro
     devices:
