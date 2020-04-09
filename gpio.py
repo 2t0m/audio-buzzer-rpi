@@ -1,12 +1,15 @@
 import configparser
 import logging
+import os
+import sys
 import time
 from RPi import GPIO
 
 logging.basicConfig(level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S',
                     format='%(asctime)-15s - [%(levelname)s] buzzer: %(message)s', )
 
-PIN = 4
+PIN = int(os.getenv('GPIO_PIN'))
+SCAN_INTERVAL = float(os.getenv('SCAN_INTERVAL'))
 GPIO.setmode(GPIO.BCM)
 
 config = configparser.ConfigParser()
@@ -14,7 +17,7 @@ config.sections()
 
 old_power=0
 
-logging.info("Initializing...")
+logging.info("Initializing Buzzer on port "+str(PIN)+" with interval of "+str(SCAN_INTERVAL)+"s.")
 
 try:
     while True:
@@ -42,7 +45,7 @@ try:
                 GPIO.setup(PIN, GPIO.OUT)
                 last_buzz = True
 
-        time.sleep(0.3)
+        time.sleep(SCAN_INTERVAL)
 except:
-    logging.info("Exception...")
+    logging.info(sys.exc_info()[0])
     GPIO.cleanup()
