@@ -5,6 +5,9 @@ services:
     image: audio-buzzer-rpi-ha
     container_name: audio-buzzer-rpi-ha
     restart: unless-stopped
+    environment:
+      GPIO_PIN: 4
+      SCAN_INTERVAL: 0.3
     volumes:
       - /opt/homeassistant/apps:/config:ro
     devices:
