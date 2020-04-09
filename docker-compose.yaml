@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  audio-buzzer:
+  audio-buzzer-rpi:
     build: .
     volumes:
       - /opt/homeassistant/apps:/config:ro
